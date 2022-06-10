@@ -13,8 +13,8 @@ public record ShelterDTO(
         @Positive(message = "Id should be positive number")
         Long id,
         String name,
-        String city
+        String city,
 //        List<AnimalDTO> animals,
-//        String environment
+        String environment
 ) {
 }

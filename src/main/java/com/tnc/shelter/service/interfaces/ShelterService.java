@@ -9,7 +9,8 @@ import java.util.List;
 
 @Service
 public interface ShelterService {
-    ShelterDomain get(Long id);
+//    ShelterDomain get(Long id);
+    ShelterDomain getShelter();
 
     List<ShelterDomain> getAll();
 

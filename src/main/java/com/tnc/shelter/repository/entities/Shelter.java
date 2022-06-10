@@ -36,7 +36,7 @@ public class Shelter {
 //    @JoinColumn(name = "shelter_id")
 //    private List<Animal> animals = new ArrayList<>();
 
-//    private String environment;
+    private String environment;
 }
 
 

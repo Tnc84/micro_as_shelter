@@ -25,10 +25,15 @@ public class ShelterController {
     private final ShelterService shelterService;
     private final ShelterDTOMapper shelterDTOMapper;
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<ShelterDTO> get(@PathVariable Long id) {
-        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.get(id)));
+    @GetMapping("/iasi")
+    public ResponseEntity<ShelterDTO> getShelter() {
+        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.getShelter()));
     }
+
+//    @GetMapping(value = "/{id}")
+//    public ResponseEntity<ShelterDTO> get(@PathVariable Long id) {
+//        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.get(id)));
+//    }
 
     @GetMapping
     public ResponseEntity<List<ShelterDTO>> getAll() {

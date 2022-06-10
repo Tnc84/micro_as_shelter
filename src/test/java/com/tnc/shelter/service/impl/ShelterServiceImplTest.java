@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class ShelterServiceImplTest {
 
-    private final ShelterDomain shelterDomain = new ShelterDomain(3L, "Bucium", "Iasi", "env");
+    private final ShelterDomain shelterDomain = new ShelterDomain(3L, "Bucium", "Iasi");
 
     @Mock
     private ShelterRepository shelterRepositoryMock;
@@ -49,7 +49,7 @@ class ShelterServiceImplTest {
     @Test
     @Disabled
     void add() throws ShelterAddressException, ShelterNameException {
-        ShelterDomain shelterDomain = new ShelterDomain(3L, "Bucium", "iasi", "env");
+        ShelterDomain shelterDomain = new ShelterDomain(3L, "Bucium", "iasi");
 
         shelterServiceMock.add(shelterDomain);
 //        shelterRepositoryMock.save(shelterDomainMapper.toEntity(shelterDomain));

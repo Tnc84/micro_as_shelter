@@ -12,14 +12,5 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-
-
-
   config:
     import: optional:configserver:http://localhost:8888
-
-#  config:
-#    import:
-#      optional:
-#        configserver:
-#          http://localhost:8888

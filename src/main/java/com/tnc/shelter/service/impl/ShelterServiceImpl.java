@@ -1,5 +1,6 @@
 package com.tnc.shelter.service.impl;
 
+import com.tnc.shelter.repository.entities.Shelter;
 import com.tnc.shelter.repository.interfaces.ShelterRepository;
 import com.tnc.shelter.service.domain.ShelterDomain;
 import com.tnc.shelter.service.exception.ShelterAddressException;
@@ -28,10 +29,16 @@ public class ShelterServiceImpl implements ShelterService {
     private final ShelterDomainMapper shelterDomainMapper;
     private final Environment environment;
 
+
     @Override
-    public ShelterDomain get(Long id) {
-        return shelterDomainMapper.toDomain(shelterRepository.getById(id));
+    public ShelterDomain getShelter() {
+        return shelterDomainMapper.toDomain(shelterRepository.findByName("Bucium"));
     }
+
+//    @Override
+//    public ShelterDomain getShelterById(Long id) {
+//        return shelterDomainMapper.toDomain(shelterRepository.getById(id));
+//    }
 
     @Override
     public List<ShelterDomain> getAll() {
@@ -42,8 +49,8 @@ public class ShelterServiceImpl implements ShelterService {
     public ShelterDomain add(ShelterDomain shelterDomain) throws ShelterAddressException, ShelterNameException {
         ValidateShelter.validateShelter(shelterDomain, shelterDomain.getName());
         var addShelter = shelterDomainMapper.toEntity(shelterDomain);
-//        String port = environment.getProperty("local.port.name");
-//        addShelter.setEnvironment(port);
+        String port = environment.getProperty("local.port.name");
+        addShelter.setEnvironment(port);
         return shelterDomainMapper.toDomain(shelterRepository.save(addShelter));
     }
 
