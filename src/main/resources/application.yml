@@ -1,5 +1,5 @@
 server:
-  port : 8092
+  port: 8092
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -12,3 +12,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+#  config:
+#    import:
+#      optional:
+#        configserver:
+#          http://localhost:8888
