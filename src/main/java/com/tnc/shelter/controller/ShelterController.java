@@ -26,8 +26,8 @@ public class ShelterController {
     private final ShelterDTOMapper shelterDTOMapper;
 
     @GetMapping("/iasi")
-    public ResponseEntity<ShelterDTO> getShelter() {
-        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.getShelter()));
+    public ResponseEntity<ShelterDTO> getShelterByName() {
+        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.getShelterByName()));
     }
 
 //    @GetMapping(value = "/{id}")
@@ -35,18 +35,18 @@ public class ShelterController {
 //        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.get(id)));
 //    }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<ShelterDTO>> getAll() {
         return ResponseEntity.ok(shelterDTOMapper.toDTOList(shelterService.getAll()));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     @Validated(OnCreate.class)
     public ResponseEntity<ShelterDTO> add(@Valid @RequestBody ShelterDTO shelterDTO) throws ShelterAddressException, ShelterNameException {
         return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.add(shelterDTOMapper.toDomain(shelterDTO))));
     }
 
-    @PutMapping
+    @PutMapping("/update")
     @Validated(OnUpdate.class)
     public ResponseEntity<ShelterDTO> update(@Valid @RequestBody ShelterDTO shelterDTO) throws ShelterAddressException, ShelterNameException {
         return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.add(shelterDTOMapper.toDomain(shelterDTO))));

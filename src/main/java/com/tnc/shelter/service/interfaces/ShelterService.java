@@ -10,11 +10,12 @@ import java.util.List;
 @Service
 public interface ShelterService {
 //    ShelterDomain get(Long id);
-    ShelterDomain getShelter();
+    ShelterDomain getShelterByName();
 
     List<ShelterDomain> getAll();
 
     ShelterDomain add(ShelterDomain shelterDomain) throws ShelterAddressException, ShelterNameException;
 
     ShelterDomain update(ShelterDomain shelterDomain);
+
 }

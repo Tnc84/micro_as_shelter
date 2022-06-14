@@ -31,7 +31,7 @@ public class ShelterServiceImpl implements ShelterService {
 
 
     @Override
-    public ShelterDomain getShelter() {
+    public ShelterDomain getShelterByName() {
         var getShelter = shelterDomainMapper.toDomain(shelterRepository.findByName("Bucium"));
         String port = environment.getProperty("local.server.port");
         getShelter.setEnvironment(port);
@@ -53,8 +53,8 @@ public class ShelterServiceImpl implements ShelterService {
     public ShelterDomain add(ShelterDomain shelterDomain) throws ShelterAddressException, ShelterNameException {
         ValidateShelter.validateShelter(shelterDomain, shelterDomain.getName());
         var addShelter = shelterDomainMapper.toEntity(shelterDomain);
-//        String port = environment.getProperty("local.server.port");
-//        addShelter.setEnvironment(port);
+        String port = environment.getProperty("local.server.port");
+        addShelter.setEnvironment(port);
         return shelterDomainMapper.toDomain(shelterRepository.save(addShelter));
     }
 
