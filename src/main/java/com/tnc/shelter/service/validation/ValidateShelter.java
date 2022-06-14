@@ -25,6 +25,7 @@ public class ValidateShelter {
             throw new ShelterAddressException("The shelter is not from Iasi");
         }
         /// this method must iterate to all shelters name and compare the names
+//        check if this name exists in db
 //        if (shelterDomain.getName().contains(findShelterByName.getName())) {
 //            throw new ShelterNameException("This name already exist");
 //        }
