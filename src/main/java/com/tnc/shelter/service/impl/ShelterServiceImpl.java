@@ -1,5 +1,6 @@
 package com.tnc.shelter.service.impl;
 
+import com.sun.xml.bind.v2.TODO;
 import com.tnc.shelter.repository.entities.Shelter;
 import com.tnc.shelter.repository.interfaces.ShelterRepository;
 import com.tnc.shelter.service.domain.ShelterDomain;
@@ -31,11 +32,11 @@ public class ShelterServiceImpl implements ShelterService {
 
 
     @Override
+    // TODO this method must receive a String name
     public ShelterDomain getShelterByName() {
         var getShelter = shelterDomainMapper.toDomain(shelterRepository.findByName("Bucium"));
         setShelterEnvironment(getShelter);
         return getShelter;
-//                shelterDomainMapper.toDomain(shelterRepository.findByName("Bucium"));
     }
 
 //    @Override
@@ -45,14 +46,22 @@ public class ShelterServiceImpl implements ShelterService {
 
     @Override
     public List<ShelterDomain> getAll() {
-        return shelterDomainMapper.toDomainList(shelterRepository.findAll());
+        var getShelters = shelterDomainMapper.toDomainList(shelterRepository.findAll());
+        String port = environment.getProperty("local.server.port");
+
+        for (ShelterDomain shelters : getShelters) {
+            shelters.setEnvironment(port);
+        }
+        return getShelters;
     }
 
     @Override
     public ShelterDomain add(ShelterDomain shelterDomain) throws ShelterAddressException, ShelterNameException {
         ValidateShelter.validateShelter(shelterDomain, shelterDomain.getName());
-        Shelter addShelter = setShelterEnvironment(shelterDomain);
-        return shelterDomainMapper.toDomain(shelterRepository.save(addShelter));
+        shelterDomain = setShelterEnvironment(shelterDomain);
+//        Shelter addShelter = setShelterEnvironment(shelterDomain);
+//        return shelterDomainMapper.toDomain(shelterRepository.save(addShelter));
+        return shelterDomainMapper.toDomain(shelterDomainMapper.toEntity(shelterDomain));
     }
 
     @Override
@@ -60,14 +69,15 @@ public class ShelterServiceImpl implements ShelterService {
         return shelterDomainMapper.toDomain(shelterDomainMapper.toEntity(shelterDomain));
     }
 
-    public ShelterDomain findByName(String name){
-        return shelterDomainMapper.toDomain(shelterRepository.findByName(name));
+    public ShelterDomain findByName(String name) {
+        var getShelter = shelterDomainMapper.toDomain(shelterRepository.findByName(name));
+        setShelterEnvironment(getShelter);
+        return getShelter;
     }
 
-    private Shelter setShelterEnvironment(ShelterDomain shelterDomain) {
-        var addShelter = shelterDomainMapper.toEntity(shelterDomain);
+    private ShelterDomain setShelterEnvironment(ShelterDomain shelterDomain) {
         String port = environment.getProperty("local.server.port");
-        addShelter.setEnvironment(port);
-        return addShelter;
+        shelterDomain.setEnvironment(port);
+        return shelterDomain;
     }
 }
