@@ -46,8 +46,8 @@ public class ShelterServiceImpl implements ShelterService {
 
     @Override
     public List<ShelterDomain> getAll() {
-        var getShelters = shelterDomainMapper.toDomainList(shelterRepository.findAll());
         String port = environment.getProperty("local.server.port");
+        var getShelters = shelterDomainMapper.toDomainList(shelterRepository.findAll());
 
         for (ShelterDomain shelters : getShelters) {
             shelters.setEnvironment(port);
