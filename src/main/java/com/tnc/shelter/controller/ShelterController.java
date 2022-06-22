@@ -9,13 +9,19 @@ import com.tnc.shelter.service.impl.FeignAnimalProxy;
 import com.tnc.shelter.service.interfaces.ShelterService;
 import com.tnc.shelter.service.validation.OnCreate;
 import com.tnc.shelter.service.validation.OnUpdate;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping(value = "/shelters")
 @RestController
@@ -24,13 +30,21 @@ import java.util.List;
 //@PreAuthorize("isAuthenticated() && hasRole('MOD')")
 public class ShelterController {
 
+    private final Logger logger = LoggerFactory.getLogger(ShelterController.class);
     private final FeignAnimalProxy feignAnimalProxy;
     private final ShelterService shelterService;
     private final ShelterDTOMapper shelterDTOMapper;
 
     @GetMapping("/getAllAnimals")
-    public List<AnimalDTO> getAllAnimalsFeign() {
+    @Retry(name = "getAllAnimals", fallbackMethod = "fallbackResponse")
+    public List<AnimalDTO> getAllAnimalsFeign(){
+        logger.info("getAllAnimals method call from shelter-microservice received");
         return feignAnimalProxy.getAllAnimals();
+    }
+
+    private List<AnimalDTO> fallbackResponse(Exception e){
+        logger.error("Animal server is down");
+        return null;
     }
 
     @GetMapping("/getAnimalByIdFeign/{id}")
@@ -63,5 +77,6 @@ public class ShelterController {
 //    public ResponseEntity<ShelterDTO> get(@PathVariable Long id) {
 //        return ResponseEntity.ok(shelterDTOMapper.toDTO(shelterService.get(id)));
 //    }
+
 
 }
